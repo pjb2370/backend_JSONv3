@@ -4,15 +4,20 @@ import com.investmentsite.isc.user.dao.SluserRepository;
 import com.investmentsite.isc.user.domain.Sluser;
 import com.investmentsite.isc.user.dto.SluserInput;
 import com.investmentsite.isc.user.dto.SluserSighInDto;
+import com.investmentsite.isc.user.kakaoclient.KakaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SluserService {
     private final SluserRepository sluserRepository;
+
+    private final KakaoService kakaoService;
 
     //회원가입
     public boolean signUp(SluserInput sluserInput){
@@ -26,6 +31,14 @@ public class SluserService {
         }else {
             return false;
         }
+    }
+    //카카오 로그인
+    public String getAccessToken(String authorize_code){
+        return this.kakaoService.getAccessToken(authorize_code);
+    }
+
+    public HashMap<String, Object> getUserInfo(String access_Token){
+        return this.kakaoService.getUserInfo(access_Token);
     }
 
     //로그인

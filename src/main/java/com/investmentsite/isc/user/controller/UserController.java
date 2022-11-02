@@ -6,6 +6,7 @@ import com.investmentsite.isc.user.service.SluserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @RequestMapping("/user")
@@ -18,6 +19,18 @@ public class UserController {
     @PostMapping("/signUp")
     public boolean signUp(@RequestBody SluserInput sluserInput) {
         return this.sluserService.signUp(sluserInput);
+    }
+
+    //카카오 로그인
+    @GetMapping("/kakaoLogin")
+    public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception{
+        System.out.println("#########" + code);
+        String access_Token = sluserService.getAccessToken(code);
+        HashMap<String, Object> userInfo = sluserService.getUserInfo(access_Token);
+        System.out.println("###access_Token#### : " + access_Token);
+        System.out.println("###nickname#### : " + userInfo.get("nickname"));
+        System.out.println("###email#### : " + userInfo.get("email"));
+        return "/kakaoLogin";
     }
 
     //로그인
