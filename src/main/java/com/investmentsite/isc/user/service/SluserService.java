@@ -6,6 +6,7 @@ import com.investmentsite.isc.user.dto.SluserInput;
 import com.investmentsite.isc.user.dto.SluserSighInDto;
 import com.investmentsite.isc.user.kakaoclient.KakaoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,8 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SluserService {
     private final SluserRepository sluserRepository;
-
     private final KakaoService kakaoService;
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입
     public boolean signUp(SluserInput sluserInput){
@@ -25,7 +26,7 @@ public class SluserService {
             Sluser S1 = new Sluser();
             S1.setUserId(sluserInput.getUserId());
             S1.setUserName(sluserInput.getUserName());
-            S1.setPassword(sluserInput.getPassword());
+            S1.setPassword(passwordEncoder.encode(sluserInput.getPassword()));
             this.sluserRepository.save(S1);
             return true;
         }else {
@@ -47,7 +48,7 @@ public class SluserService {
         SluserSighInDto sluserSighInDto = new SluserSighInDto();
         if (opSluser.isPresent()){
             Sluser sluser = sluserRepository.findByUserId(sluserInput.getUserId());
-            if (sluser.getPassword().equals(sluserInput.getPassword())){
+            if (passwordEncoder.matches(sluserInput.getPassword(), sluser.getPassword())){
                 //로그인에 성공했을때만, 유저네임과 true 반환
                 //실패했을땐 null과 false반환
                 sluserSighInDto.setUserName(opSluser.get().getUserName());
