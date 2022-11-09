@@ -32,9 +32,9 @@ public class BoardController {
         }
     }
     //이미지 업로드
-    @PostMapping("/upload_ok")
-    public String upload(@RequestParam("file") MultipartFile file) {
-        return this.fileService.upload(file);
+    @PostMapping("/post/file")
+    public String postFile(@RequestParam("file") MultipartFile file) {
+        return this.fileService.postFile(file);
     }
 
     //댓글 작성
@@ -62,6 +62,11 @@ public class BoardController {
     public boolean boardPatch(@PathVariable("lcategory") String lcategory, @PathVariable("mcategory") String mcategory, BoardInput boardInput){
         return this.boardService.boardPatch(lcategory, mcategory, boardInput);
     }
+    //이미지 수정
+    @PatchMapping("/patch/file")
+    public String patchFile(@RequestParam("file") MultipartFile file){
+        return this.fileService.patchFile(file);
+    }
     //댓글 수정
     @PatchMapping("/patch/comment")
     public boolean commentPatch(@RequestBody BoardInput boardInput){
@@ -71,6 +76,11 @@ public class BoardController {
     @DeleteMapping("/delete")
     public boolean boardDelete(@PathVariable("lcategory") String lcategory, @PathVariable("mcategory") String mcategory, @RequestBody BoardInput boardInput){
         return this.boardService.boardDelete(lcategory, mcategory, boardInput);
+    }
+    //이미지 삭제
+    @DeleteMapping("/delete/file")
+    public String deleteFile(@RequestParam("file")MultipartFile file) {
+        return this.fileService.deleteFile(file);
     }
     //댓글 삭제
     @DeleteMapping("/delete/comment")
