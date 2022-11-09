@@ -1,13 +1,17 @@
 package com.investmentsite.isc.board.controller;
 
+import com.investmentsite.isc.board.domain.Board;
 import com.investmentsite.isc.board.dto.BoardDto;
 import com.investmentsite.isc.board.dto.BoardListDto;
 import com.investmentsite.isc.board.dto.CommentListDto;
 import com.investmentsite.isc.board.service.BoardService;
+import com.investmentsite.isc.board.service.FileService;
 import com.investmentsite.isc.board.vo.BoardInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,6 +20,7 @@ import java.util.List;
 @RestController
 public class BoardController {
     private final BoardService boardService;
+    private final FileService fileService;
 
     //게시글 작성
     @PostMapping("/post")
@@ -26,6 +31,12 @@ public class BoardController {
             return false;
         }
     }
+    //이미지 업로드
+    @PostMapping("/upload_ok")
+    public String upload(@RequestParam("file") MultipartFile file) {
+        return this.fileService.upload(file);
+    }
+
     //댓글 작성
     @PostMapping("/post/comment")
     public boolean commentPost(@PathVariable("lcategory") String lcategory, @PathVariable("mcategory") String mcategory, @RequestBody BoardInput boardInput){

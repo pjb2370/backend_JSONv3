@@ -66,17 +66,16 @@ public class SluserService {
             return sluserSighInDto;
         }
     }
-
     //패스워드 재설정
     public boolean pwReset(SluserInput sluserInput){
         //입력받은 패스워드와 체크패스워드가 같을때
-        if (sluserInput.getPassword().equals(sluserInput.getConfirmPassword())){
+        if (passwordEncoder.matches(sluserInput.getPassword(), sluserInput.getConfirmPassword())){
             Optional<Sluser> opSluserrs = Optional.ofNullable(this.sluserRepository.findByUserId(sluserInput.getUserId()));
             SluserSighInDto sluserSighInDto = new SluserSighInDto();
             //찾은 id가 db에 존재할때
             if (opSluserrs.isPresent()){
                 Sluser sluser = this.sluserRepository.findByUserId(sluserInput.getUserId());
-                sluser.setPassword(sluserInput.getPassword());
+                sluser.setPassword(passwordEncoder.encode(sluserInput.getPassword()));
                 this.sluserRepository.save(sluser);
                 return true;
             }else {
