@@ -23,4 +23,6 @@ public class Board {
     private String lcategory;
     @Column(length = 20)
     private String mcategory;
+    @Column
+    private Long fileId;
 }

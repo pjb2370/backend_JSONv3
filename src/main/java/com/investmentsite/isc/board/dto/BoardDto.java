@@ -10,4 +10,5 @@ public class BoardDto {
     private String writer;
     private String date;
     private Integer views;
+    private Long fileId;
 }

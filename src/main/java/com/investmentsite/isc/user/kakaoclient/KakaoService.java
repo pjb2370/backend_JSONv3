@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 @Service
 public class KakaoService {
-
     public String getAccessToken(String authorize_code){
         String access_Token = "";
         String refresh_Token = "";

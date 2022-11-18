@@ -2,7 +2,6 @@ package com.investmentsite.isc.board.service;
 
 import com.investmentsite.isc.board.dao.BoardCommentRepository;
 import com.investmentsite.isc.board.dao.BoardRepository;
-import com.investmentsite.isc.board.dao.FileRepository;
 import com.investmentsite.isc.board.domain.Board;
 import com.investmentsite.isc.board.domain.BoardComment;
 import com.investmentsite.isc.board.dto.BoardDto;
@@ -12,7 +11,6 @@ import com.investmentsite.isc.board.vo.BoardInput;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,7 +24,6 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardCommentRepository commentRepository;
-    private final FileRepository fileRepository;
     private final ModelMapper modelMapper;
     LocalDate now = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

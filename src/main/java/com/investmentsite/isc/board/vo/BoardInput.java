@@ -8,4 +8,5 @@ public class BoardInput {
     private String title;
     private String contents;
     private String writer;
+    private String fileId;
 }
